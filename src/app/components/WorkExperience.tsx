@@ -1,14 +1,34 @@
 "use client";
 import { PROJECTS } from "@/app/config/constants";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const tabs = ["Projects", "Contributions"];
 
 type TabKey = (typeof tabs)[number];
 
-const WorkExperience = () => {
+interface WorkExperienceProps {
+  selectedSkills?: string[];
+}
+
+const WorkExperience = ({ selectedSkills = [] }: WorkExperienceProps) => {
   const [activeTab, setActiveTab] = useState<TabKey>("Projects");
+
+  const filteredProjects = useMemo(() => {
+    if (selectedSkills.length === 0) {
+      return PROJECTS;
+    }
+
+    return PROJECTS.filter((project) =>
+      selectedSkills.some((skill) =>
+        project.builtWith.some(
+          (tech) =>
+            tech.toLowerCase().includes(skill.toLowerCase()) ||
+            skill.toLowerCase().includes(tech.toLowerCase())
+        )
+      )
+    );
+  }, [selectedSkills]);
 
   const handleTabClick = (value: TabKey) => {
     setActiveTab(value);
@@ -31,7 +51,7 @@ const WorkExperience = () => {
       </div>
 
       <div className="flex flex-col gap-2">
-        {PROJECTS.map((project, index) => (
+        {filteredProjects.map((project, index) => (
           <div
             key={index}
             className="relative bg-primary-card p-3 flex flex-col gap-2 rounded-md"

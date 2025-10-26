@@ -21,12 +21,12 @@ const ProfileInformation = () => {
   };
 
   return (
-    <div className="lg:mt-10 lg:space-y-2">
+    <div className="lg:space-y-2">
       <div>
         <h1 className="text-xl font-semibold lg:text-2xl">
           Hi, I&apos;m John Ogama
         </h1>
-        <span>Fullstack Engineer (+2 years of experience)</span>
+        <span>Fullstack Engineer (2+ years of experience)</span>
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex gap-1 items-center">
