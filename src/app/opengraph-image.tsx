@@ -101,6 +101,17 @@ export default async function Image() {
                 borderRadius: "8px",
               }}
             >
+              Nest.js
+            </span>
+            <span
+              style={{
+                fontSize: "18px",
+                color: "#60a5fa",
+                border: "1px solid #60a5fa",
+                padding: "8px 16px",
+                borderRadius: "8px",
+              }}
+            >
               TypeScript
             </span>
           </div>
