@@ -5,10 +5,12 @@ import { useState } from "react";
 
 const tabs = ["Projects", "Contributions"];
 
-const WorkExperience = () => {
-  const [activeTab, setActiveTab] = useState<string>("Projects");
+type TabKey = (typeof tabs)[number];
 
-  const handleTabClick = (value: string) => {
+const WorkExperience = () => {
+  const [activeTab, setActiveTab] = useState<TabKey>("Projects");
+
+  const handleTabClick = (value: TabKey) => {
     setActiveTab(value);
   };
 
@@ -40,7 +42,15 @@ const WorkExperience = () => {
               </h1>
               <span className="text-xs">{project.country}</span>
             </div>
-            <span className="text-sm text-white/70">{project.description}</span>
+            <div className="w-[80%]">
+              {activeTab === "Projects" ? (
+                <span className="text-sm text-white/70">
+                  {project.description}
+                </span>
+              ) : (
+                <Contributions contributions={project.contributions} />
+              )}
+            </div>
             <div className="flex gap-1 items-center">
               <div className="text-xs text-gray flex gap-x-2 gap-y-1 items-center flex-wrap">
                 BUILD WITH:{" "}
@@ -68,3 +78,15 @@ const WorkExperience = () => {
 };
 
 export default WorkExperience;
+
+function Contributions({ contributions }: { contributions: string[] }) {
+  return (
+    <ul className="list-disc list-inside">
+      {contributions.map((contribution, index) => (
+        <li key={index} className="text-sm text-white/70">
+          {contribution}
+        </li>
+      ))}
+    </ul>
+  );
+}
