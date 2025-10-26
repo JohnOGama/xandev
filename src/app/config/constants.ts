@@ -120,6 +120,7 @@ export const PROJECTS: Project[] = [
       "React query",
       "Zustand",
       "TypeScript",
+      "PostgreSQL",
     ],
   },
   {
@@ -148,7 +149,14 @@ export const PROJECTS: Project[] = [
       "Built reusable content-rendering components and optimized performance with useMemo, memo, and useCallback.",
       "Contributed to debugging, testing, and performance improvements.",
     ],
-    builtWith: ["Next Js", "Tailwind CSS", "Nest Js", "Zustand", "TypeScript"],
+    builtWith: [
+      "Next Js",
+      "Tailwind CSS",
+      "Nest Js",
+      "Zustand",
+      "TypeScript",
+      "PostgreSQL",
+    ],
   },
   {
     title: "Back to the Futr",
