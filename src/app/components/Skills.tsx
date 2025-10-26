@@ -27,7 +27,7 @@ const Skills = ({ onSkillsChange }: SkillsProps) => {
           <button
             key={id}
             onClick={() => handleSkillClick(skill)}
-            className="flex items-center gap-2 p-1.5 text-nowrap text-sm rounded-md bg-secondary-card hover:bg-secondary-card/80 transition-colors"
+            className="flex cursor-pointer items-center gap-2 p-1.5 text-nowrap text-sm rounded-md bg-secondary-card hover:bg-secondary-card/80 transition-colors"
           >
             <div className="w-2 h-2 rounded-full border border-white">
               {selectedSkills.includes(skill) && (
