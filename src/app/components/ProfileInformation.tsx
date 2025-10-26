@@ -26,7 +26,7 @@ const ProfileInformation = () => {
         <h1 className="text-xl font-semibold lg:text-2xl">
           Hi, I&apos;m John Ogama
         </h1>
-        <span>Fullstack Engineer</span>
+        <span>Fullstack Engineer (+2 years of experience)</span>
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex gap-1 items-center">

@@ -10,6 +10,7 @@ export const SKILLS = [
   "PostgreSQL",
   "ethers-js",
   "Postman",
+  "TypeScript",
 ];
 
 export type Project = {
