@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { trackPortfolioEvent } from "@/lib/analytics";
 import { getRequestMeta } from "@/lib/request-meta";
+import { rateLimit } from "@/lib/rate-limit";
 
 type EventBody = {
   sessionId?: string;
@@ -19,6 +20,11 @@ function isValidEventName(value: string) {
 
 export async function POST(req: Request) {
   try {
+    const limited = rateLimit(req, "analytics-event", 120, 60_000);
+    if (!limited.allowed) {
+      return NextResponse.json({ ok: false }, { status: 429 });
+    }
+
     const body = (await req.json()) as EventBody;
     const sessionId = (body.sessionId || "").trim();
     const eventName = (body.eventName || "").trim();

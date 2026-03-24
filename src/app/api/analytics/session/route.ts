@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { endPortfolioSession, startPortfolioSession } from "@/lib/analytics";
 import { getRequestMeta } from "@/lib/request-meta";
+import { rateLimit } from "@/lib/rate-limit";
 
 type SessionBody = {
   action?: "start" | "end";
@@ -16,6 +17,11 @@ function isValidSessionId(value: string) {
 
 export async function POST(req: Request) {
   try {
+    const limited = rateLimit(req, "analytics-session", 60, 60_000);
+    if (!limited.allowed) {
+      return NextResponse.json({ ok: false }, { status: 429 });
+    }
+
     const body = (await req.json()) as SessionBody;
     const action = body.action;
     const sessionId = (body.sessionId || "").trim();

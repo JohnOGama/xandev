@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { loginAdmin } from "@/lib/admin-auth";
+import { rateLimit } from "@/lib/rate-limit";
 
 type LoginBody = {
   username?: string;
@@ -8,6 +9,19 @@ type LoginBody = {
 
 export async function POST(req: Request) {
   try {
+    const limited = rateLimit(req, "admin-login", 5, 60_000);
+    if (!limited.allowed) {
+      return NextResponse.json(
+        { ok: false, error: "Too many requests" },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": Math.ceil((limited.resetAt - Date.now()) / 1000).toString(),
+          },
+        }
+      );
+    }
+
     const body = (await req.json()) as LoginBody;
     const username = (body.username || "").trim();
     const password = body.password || "";
