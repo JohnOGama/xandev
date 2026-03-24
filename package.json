@@ -6,12 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:admin": "node --env-file=.env scripts/seed-admin.mjs"
   },
   "dependencies": {
     "@vercel/og": "^0.8.5",
     "lucide-react": "^0.548.0",
     "next": "16.0.10",
+    "pg": "^8.20.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },

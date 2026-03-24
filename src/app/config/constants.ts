@@ -22,6 +22,51 @@ export type Project = {
   builtWith: string[];
 };
 
+export type WorkTimelineItem = {
+  role: string;
+  company: string;
+  employmentType: string;
+  location: string;
+  period: string;
+  highlights: string[];
+};
+
+export const WORK_TIMELINE: WorkTimelineItem[] = [
+  {
+    role: "Software Developer",
+    company: "AffirmData",
+    employmentType: "Contract",
+    location: "United States (Remote)",
+    period: "Sep 2025 - Nov 2025",
+    highlights: [
+      "Migrated a production platform from Bubble to Next.js, NestJS, GraphQL, and PostgreSQL.",
+      "Rebuilt and optimized frontend UX for better performance and reliability.",
+    ],
+  },
+  {
+    role: "Full-stack Engineer",
+    company: "Mobii PH",
+    employmentType: "Full-time",
+    location: "Philippines (Remote)",
+    period: "Jul 2024 - Sep 2025",
+    highlights: [
+      "Shipped end-to-end features across frontend and backend with Web3 integrations.",
+      "Built a mini dApp on KAIA and improved scalability for a large user base.",
+    ],
+  },
+  {
+    role: "Frontend Developer",
+    company: "1TechHub",
+    employmentType: "Part-time",
+    location: "Australia (Remote)",
+    period: "Nov 2023 - Aug 2025",
+    highlights: [
+      "Built a scalable analytics admin dashboard from scratch using Next.js.",
+      "Converted Figma designs into responsive, production-ready UI and integrated APIs.",
+    ],
+  },
+];
+
 export const PROJECTS: Project[] = [
   {
     title: "TaskMe",

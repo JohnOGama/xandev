@@ -1,17 +1,19 @@
-"use client";
-import ProfileInformation from "./components/ProfileInformation";
-import Skills from "./components/Skills";
-import WorkExperience from "./components/WorkExperience";
-import { useState } from "react";
+import { headers } from "next/headers";
+import HomeClient from "./components/HomeClient";
+import { trackPortfolioView } from "@/lib/analytics";
+import { getRequestMeta } from "@/lib/request-meta";
 
-export default function Home() {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+export const dynamic = "force-dynamic";
 
-  return (
-    <div className="w-full flex flex-col gap-4">
-      <ProfileInformation />
-      <Skills onSkillsChange={setSelectedSkills} />
-      <WorkExperience selectedSkills={selectedSkills} />
-    </div>
-  );
+export default async function Home() {
+  const requestHeaders = await headers();
+  const meta = getRequestMeta(requestHeaders, "/");
+
+  try {
+    await trackPortfolioView(meta);
+  } catch (error) {
+    console.error("Analytics tracking failed:", error);
+  }
+
+  return <HomeClient />;
 }

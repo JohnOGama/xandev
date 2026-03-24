@@ -14,43 +14,70 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "John Ogama | Portfolio",
+  metadataBase: new URL("https://johnogama.is-a.dev"),
+  title: {
+    default: "John Ogama | Full-stack Developer",
+    template: "%s | John Ogama",
+  },
   description:
-    "Fullstack Engineer with 2+ years of experience in React, Next.js, TypeScript, and modern web technologies. View my portfolio and project contributions.",
+    "Full-stack Developer building modern, high-performance web apps with Next.js, React, TypeScript, and NestJS.",
+  applicationName: "John Ogama Portfolio",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   authors: [{ name: "John Ogama" }],
   creator: "John Ogama",
+  publisher: "John Ogama",
   keywords: [
     "John Ogama",
-    "Fullstack Developer",
+    "Full-stack Engineer",
+    "Full-stack Developer",
+    "Frontend Developer",
     "React Developer",
     "Next.js Developer",
+    "NestJS Developer",
     "TypeScript",
+    "Web3 Developer",
     "Portfolio",
-    "Web Developer",
+    "Software Engineer Philippines",
   ],
   openGraph: {
     type: "website",
-    url: "https://johnogama-portfolio.vercel.app",
-    title: "John Ogama | Fullstack Engineer Portfolio",
+    locale: "en_US",
+    url: "https://johnogama.is-a.dev",
+    title: "John Ogama | Full-stack Engineer",
     description:
-      "Fullstack Engineer with 2+ years of experience in React, Next.js, TypeScript, and modern web technologies.",
+      "Modern, scalable web products built with React, Next.js, TypeScript, NestJS, and PostgreSQL.",
     siteName: "John Ogama Portfolio",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "John Ogama - Fullstack Engineer Portfolio",
+        alt: "John Ogama portfolio preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "John Ogama | Fullstack Engineer Portfolio",
+    title: "John Ogama | Full-stack Engineer",
     description:
-      "Fullstack Engineer with 2+ years of experience in React, Next.js, TypeScript, and modern web technologies.",
-    images: ["/opengraph-image"],
+      "Modern, scalable web products built with React, Next.js, TypeScript, NestJS, and PostgreSQL.",
+    creator: "@JohnOGama",
+    images: ["/opengraph-image.png"],
   },
+  category: "technology",
 };
 
 export default function RootLayout({

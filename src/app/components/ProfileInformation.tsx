@@ -4,9 +4,11 @@ import { FileText, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { GITHUB_LINK, LINKEDIN_LINK } from "../config/constants";
+import { trackClickEvent } from "@/lib/client-analytics";
 
 const ProfileInformation = () => {
   const handleDownloadPdf = () => {
+    void trackClickEvent("click.resume");
     const link = document.createElement("a");
     link.href = "/pdf/JohnOgama.pdf";
     link.download = "JohnOgama.pdf";
@@ -14,6 +16,7 @@ const ProfileInformation = () => {
   };
 
   const handleMail = () => {
+    void trackClickEvent("click.email");
     const email = "ogamajohnd@gmail.com";
     const subject = encodeURIComponent("Hi John Ogama!");
 
@@ -26,7 +29,7 @@ const ProfileInformation = () => {
         <h1 className="text-xl font-semibold lg:text-2xl">
           Hi, I&apos;m John Ogama
         </h1>
-        <span>Fullstack Engineer (2+ years of experience)</span>
+        <span>Fullstack Developer </span>
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex gap-1 items-center">
@@ -47,7 +50,11 @@ const ProfileInformation = () => {
           <h1 className="text-sm md:text-base">Resume</h1>
         </div>
 
-        <Link target="_blank" href={GITHUB_LINK}>
+        <Link
+          target="_blank"
+          href={GITHUB_LINK}
+          onClick={() => void trackClickEvent("click.github")}
+        >
           <div className="w-fit cursor-pointer flex gap-1 bg-secondary-card items-center h-6 md:h-9 px-1.5 md:px-3 rounded-md">
             <Image
               src="/Icons/github-mark-white.svg"
@@ -57,7 +64,11 @@ const ProfileInformation = () => {
             />
           </div>
         </Link>
-        <Link target="_blank" href={LINKEDIN_LINK}>
+        <Link
+          target="_blank"
+          href={LINKEDIN_LINK}
+          onClick={() => void trackClickEvent("click.linkedin")}
+        >
           <div className="w-fit cursor-pointer flex gap-1 bg-secondary-card items-center h-6 md:h-9 px-1.5 md:px-3 rounded-md">
             <Image
               src="/Icons/linkedin-white.svg"

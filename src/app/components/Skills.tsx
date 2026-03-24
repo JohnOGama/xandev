@@ -20,18 +20,25 @@ const Skills = ({ onSkillsChange }: SkillsProps) => {
 
   return (
     <div className="space-y-2">
-      <h1 className="text-secondary text-xl font-medium">Skills</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-base font-semibold text-secondary md:text-lg">Skills</h1>
+        <span className="text-xs text-white/50">Filter projects by stack</span>
+      </div>
 
-      <div className="flex gap-2 items-center flex-wrap">
+      <div className="flex flex-wrap items-center gap-1.5">
         {SKILLS.map((skill, id) => (
           <button
             key={id}
             onClick={() => handleSkillClick(skill)}
-            className="flex cursor-pointer items-center gap-2 p-1.5 text-nowrap text-sm rounded-md bg-secondary-card hover:bg-secondary-card/80 transition-colors"
+            className={`flex cursor-pointer items-center gap-2 rounded-full border px-2.5 py-1 text-nowrap text-xs md:text-sm transition-colors ${
+              selectedSkills.includes(skill)
+                ? "border-secondary/50 bg-secondary/20 text-white"
+                : "border-white/10 bg-secondary-card text-white/80 hover:bg-secondary-card/80 hover:text-white"
+            }`}
           >
-            <div className="w-2 h-2 rounded-full border border-white">
+            <div className="h-2 w-2 rounded-full border border-white/80">
               {selectedSkills.includes(skill) && (
-                <div className="w-full h-full rounded-full bg-white"></div>
+                <div className="h-full w-full rounded-full bg-secondary"></div>
               )}
             </div>
             {skill}

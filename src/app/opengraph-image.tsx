@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "John Ogama - Fullstack Engineer Portfolio";
+export const alt = "John Ogama | Full-stack Developer";
 export const size = {
   width: 1200,
   height: 630,
@@ -13,109 +13,108 @@ export default async function Image() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #1c1b22 0%, #0a0a0a 100%)",
+          background:
+            "radial-gradient(circle at top right, #1f3b73 0%, #12131a 45%, #0a0a0a 100%)",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          padding: "60px",
+          justifyContent: "space-between",
+          padding: "56px 64px",
           fontFamily: "system-ui, sans-serif",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            gap: "20px",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <h1
+          <span
             style={{
-              fontSize: "72px",
-              fontWeight: "bold",
-              color: "#ffffff",
-              margin: 0,
-              lineHeight: "1.2",
+              fontSize: "24px",
+              color: "#cfe1ff",
+              letterSpacing: "0.3px",
             }}
           >
             John Ogama
-          </h1>
+          </span>
           <p
             style={{
-              fontSize: "36px",
-              color: "#60a5fa",
+              fontSize: "20px",
+              color: "#8eb6ff",
               margin: 0,
               fontWeight: "500",
             }}
           >
-            Fullstack Engineer
+            johnogama.is-a.dev
           </p>
-          <p
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "18px",
+            maxWidth: "860px",
+          }}
+        >
+          <h1
             style={{
-              fontSize: "24px",
-              color: "#808080",
+              fontSize: "68px",
+              fontWeight: 700,
+              color: "#ffffff",
               margin: 0,
-              maxWidth: "900px",
+              lineHeight: "1.08",
             }}
           >
-            2+ years of experience in React, Next.js, TypeScript, and modern web
-            technologies
+            Full-stack Developer
+          </h1>
+          <p
+            style={{
+              fontSize: "30px",
+              color: "#dbe8ff",
+              margin: 0,
+              lineHeight: "1.25",
+            }}
+          >
+            Building modern, scalable web products.
           </p>
+
           <div
             style={{
               display: "flex",
               gap: "12px",
-              marginTop: "20px",
+              marginTop: "6px",
             }}
           >
-            <span
-              style={{
-                fontSize: "18px",
-                color: "#60a5fa",
-                border: "1px solid #60a5fa",
-                padding: "8px 16px",
-                borderRadius: "8px",
-              }}
-            >
-              React
-            </span>
-            <span
-              style={{
-                fontSize: "18px",
-                color: "#60a5fa",
-                border: "1px solid #60a5fa",
-                padding: "8px 16px",
-                borderRadius: "8px",
-              }}
-            >
-              Next.js
-            </span>
-            <span
-              style={{
-                fontSize: "18px",
-                color: "#60a5fa",
-                border: "1px solid #60a5fa",
-                padding: "8px 16px",
-                borderRadius: "8px",
-              }}
-            >
-              Nest.js
-            </span>
-            <span
-              style={{
-                fontSize: "18px",
-                color: "#60a5fa",
-                border: "1px solid #60a5fa",
-                padding: "8px 16px",
-                borderRadius: "8px",
-              }}
-            >
-              TypeScript
-            </span>
+            {["React", "Next.js", "TypeScript", "NestJS"].map((tag) => (
+              <span
+                key={tag}
+                style={{
+                  fontSize: "18px",
+                  color: "#b8d2ff",
+                  background: "rgba(87, 135, 233, 0.16)",
+                  padding: "8px 16px",
+                  borderRadius: "999px",
+                }}
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
+
+        <p
+          style={{
+            margin: 0,
+            color: "#99a6be",
+            fontSize: "18px",
+          }}
+        >
+          Portfolio • Projects • Work Experience
+        </p>
       </div>
     ),
     {
