@@ -39,7 +39,7 @@ export const WORK_TIMELINE: WorkTimelineItem[] = [
     location: "Philippines (Remote)",
     period: "Nov 2025 - Feb 2026",
     highlights: [
-      "Developed and maintained frontend features using React and Next.js.",
+      "Developed and maintained frontend features using Angular.",
       "Collaborated with the team to deliver responsive and performant UI components.",
     ],
   },
