@@ -33,6 +33,17 @@ export type WorkTimelineItem = {
 
 export const WORK_TIMELINE: WorkTimelineItem[] = [
   {
+    role: "Frontend Developer",
+    company: "WYNTAP Inc",
+    employmentType: "Contract",
+    location: "Philippines (Remote)",
+    period: "Nov 2025 - Feb 2026",
+    highlights: [
+      "Developed and maintained frontend features using React and Next.js.",
+      "Collaborated with the team to deliver responsive and performant UI components.",
+    ],
+  },
+  {
     role: "Software Developer",
     company: "AffirmData",
     employmentType: "Contract",
