@@ -80,6 +80,10 @@ async function ensureAnalyticsTable() {
     );
   `);
 
+  await pool.query(`UPDATE portfolio_views SET ip_address = 'encrypted' WHERE ip_address <> 'encrypted'`);
+  await pool.query(`UPDATE portfolio_sessions SET ip_address = 'encrypted' WHERE ip_address <> 'encrypted'`);
+  await pool.query(`UPDATE portfolio_events SET ip_address = 'encrypted' WHERE ip_address <> 'encrypted'`);
+
   ensuredTable = true;
 }
 
@@ -104,7 +108,7 @@ export async function trackPortfolioView(meta: RequestMeta) {
     `,
     [
       meta.visitorKey,
-      meta.ip,
+      "encrypted",
       meta.country || null,
       meta.region || null,
       meta.city || null,
@@ -136,7 +140,7 @@ export async function startPortfolioSession(sessionId: string, meta: RequestMeta
     [
       sessionId,
       meta.visitorKey,
-      meta.ip,
+      "encrypted",
       meta.country || null,
       meta.region || null,
       meta.city || null,
@@ -191,7 +195,7 @@ export async function trackPortfolioEvent(input: TrackEventInput, meta: RequestM
       meta.visitorKey,
       input.eventName,
       input.path,
-      meta.ip,
+      "encrypted",
       meta.country || null,
       meta.region || null,
       meta.city || null,
