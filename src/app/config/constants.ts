@@ -220,6 +220,7 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+export const SITE_URL = "https://johnogama.is-a.dev";
 export const GITHUB_LINK = "https://github.com/JohnOGama";
 export const LINKEDIN_LINK = "https://www.linkedin.com/in/johnogama/";
 

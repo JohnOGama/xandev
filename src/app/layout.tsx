@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Pixel, Montserrat, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "./components/CookieConsent";
+import {
+  GITHUB_LINK,
+  LINKEDIN_LINK,
+  SITE_URL,
+  SKILL_GROUPS,
+} from "./config/constants";
 
 const montserrat = Montserrat({
   variable: "--font-sans",
@@ -26,13 +32,13 @@ const geistPixel = Geist_Pixel({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://johnogama.is-a.dev"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "John Ogama | Full-stack Developer",
     template: "%s | John Ogama",
   },
   description:
-    "Full-stack Developer building modern, high-performance web apps with Next.js, React, TypeScript, and NestJS.",
+    "John Ogama is a full-stack developer in the Philippines building web and mobile apps with React, Next.js, React Native, TypeScript, NestJS, and PostgreSQL.",
   applicationName: "John Ogama Portfolio",
   alternates: {
     canonical: "/",
@@ -58,6 +64,7 @@ export const metadata: Metadata = {
     "Frontend Developer",
     "React Developer",
     "Next.js Developer",
+    "React Native Developer",
     "NestJS Developer",
     "TypeScript",
     "Web3 Developer",
@@ -67,29 +74,33 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://johnogama.is-a.dev",
-    title: "John Ogama | Full-stack Engineer",
+    url: SITE_URL,
+    title: "John Ogama | Full-stack Developer",
     description:
-      "Modern, scalable web products built with React, Next.js, TypeScript, NestJS, and PostgreSQL.",
+      "Full-stack developer building web and mobile apps with React, Next.js, React Native, TypeScript, NestJS, and PostgreSQL.",
     siteName: "John Ogama Portfolio",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "John Ogama portfolio preview",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "John Ogama | Full-stack Engineer",
+    title: "John Ogama | Full-stack Developer",
     description:
-      "Modern, scalable web products built with React, Next.js, TypeScript, NestJS, and PostgreSQL.",
+      "Full-stack developer building web and mobile apps with React, Next.js, React Native, TypeScript, NestJS, and PostgreSQL.",
     creator: "@JohnOGama",
-    images: ["/opengraph-image.png"],
   },
   category: "technology",
+};
+
+// Structured data so search engines and AI assistants can identify who this site is about.
+// Static, hand-written values only: nothing user-supplied is serialized here.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "John Ogama",
+  url: SITE_URL,
+  jobTitle: "Full-stack Developer",
+  address: { "@type": "PostalAddress", addressCountry: "PH" },
+  sameAs: [GITHUB_LINK, LINKEDIN_LINK],
+  knowsAbout: SKILL_GROUPS.flatMap((group) => group.skills),
 };
 
 export default function RootLayout({
@@ -102,6 +113,10 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${robotoMono.variable} ${geistPixel.variable} ${geist.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <div
           aria-hidden
           className="dots pointer-events-none fixed top-0 right-0 h-[70vh] w-[60vw]"

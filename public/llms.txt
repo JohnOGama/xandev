@@ -1,0 +1,19 @@
+# John Ogama
+
+> Full-stack developer based in the Philippines, building web and mobile apps with React, Next.js, React Native, TypeScript, NestJS, and PostgreSQL.
+
+## Pages
+
+- [Home](https://johnogama.is-a.dev/): Introduction, recent roles, featured app, and client projects.
+- [Experience](https://johnogama.is-a.dev/experience): Full work history with responsibilities for each role.
+- [Stack](https://johnogama.is-a.dev/stack): Languages, frameworks, and tools grouped by category.
+- [Resume (PDF)](https://johnogama.is-a.dev/pdf/JohnOgama.pdf): Resume.
+
+## Featured project
+
+- [Strivio](https://strivio.fitness): A coaching platform that connects fitness coaches with their clients. Mobile app (React Native, Expo), landing page and admin dashboard (Next.js), and backend (NestJS, PostgreSQL).
+
+## Profiles
+
+- GitHub: https://github.com/JohnOGama
+- LinkedIn: https://www.linkedin.com/in/johnogama/
