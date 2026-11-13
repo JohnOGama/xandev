@@ -59,11 +59,17 @@ export default function ExperiencePage() {
               <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-muted">
                 {item.period}
               </p>
-              <div className="mt-3 space-y-3 text-sm leading-relaxed text-foreground/70">
+              <ul className="mt-3 space-y-3 text-sm leading-relaxed text-foreground/70">
                 {item.highlights.map((highlight) => (
-                  <p key={highlight}>{highlight}</p>
+                  <li key={highlight} className="flex gap-3">
+                    <span
+                      aria-hidden
+                      className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-muted"
+                    />
+                    <span>{highlight}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </article>
         ))}
