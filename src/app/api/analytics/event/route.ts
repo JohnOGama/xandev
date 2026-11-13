@@ -5,6 +5,7 @@ import { getRequestMeta } from "@/lib/request-meta";
 import { rateLimit } from "@/lib/rate-limit";
 
 type EventBody = {
+  consent?: string;
   sessionId?: string;
   eventName?: string;
   path?: string;
@@ -26,6 +27,12 @@ export async function POST(req: Request) {
     }
 
     const body = (await req.json()) as EventBody;
+
+    // No consent, no storage: reject before anything touches the database.
+    if (body.consent !== "granted") {
+      return NextResponse.json({ ok: false }, { status: 403 });
+    }
+
     const sessionId = (body.sessionId || "").trim();
     const eventName = (body.eventName || "").trim();
     const path = (body.path || "/").trim().slice(0, 255);

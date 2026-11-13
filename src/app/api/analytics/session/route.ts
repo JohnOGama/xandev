@@ -1,10 +1,15 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { endPortfolioSession, startPortfolioSession } from "@/lib/analytics";
+import {
+  endPortfolioSession,
+  startPortfolioSession,
+  trackPortfolioView,
+} from "@/lib/analytics";
 import { getRequestMeta } from "@/lib/request-meta";
 import { rateLimit } from "@/lib/rate-limit";
 
 type SessionBody = {
+  consent?: string;
   action?: "start" | "end";
   sessionId?: string;
   durationSeconds?: number;
@@ -23,6 +28,12 @@ export async function POST(req: Request) {
     }
 
     const body = (await req.json()) as SessionBody;
+
+    // No consent, no storage: reject before anything touches the database.
+    if (body.consent !== "granted") {
+      return NextResponse.json({ ok: false }, { status: 403 });
+    }
+
     const action = body.action;
     const sessionId = (body.sessionId || "").trim();
     const path = (body.path || "/").trim().slice(0, 255);
@@ -35,6 +46,9 @@ export async function POST(req: Request) {
     const meta = getRequestMeta(requestHeaders, path);
 
     if (action === "start") {
+      // The unique-visitor row is written here (not during page render) so it
+      // only happens after the visitor has consented.
+      await trackPortfolioView(meta);
       await startPortfolioSession(sessionId, meta);
       return NextResponse.json({ ok: true });
     }

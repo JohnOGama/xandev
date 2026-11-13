@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { trackClickEvent } from "@/lib/client-analytics";
 
@@ -56,7 +57,7 @@ const FeaturedApp = () => {
         </ul>
 
         <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-xs">
-          <a
+          <Link
             href={PLAY_STORE_LINK}
             target="_blank"
             rel="noreferrer"
@@ -70,7 +71,7 @@ const FeaturedApp = () => {
               height={168}
               className="h-10 w-auto"
             />
-          </a>
+          </Link>
           <Image
             src="/Icons/webp/app-store.webp"
             alt="Coming soon to the App Store"
@@ -78,7 +79,7 @@ const FeaturedApp = () => {
             height={275}
             className="h-10 w-auto rounded-md"
           />
-          <a
+          <Link
             href={WEBSITE_LINK}
             target="_blank"
             rel="noreferrer"
@@ -86,7 +87,7 @@ const FeaturedApp = () => {
             className="ml-3 text-muted hover:text-foreground"
           >
             strivio.fitness ↗
-          </a>
+          </Link>
         </div>
       </article>
     </div>

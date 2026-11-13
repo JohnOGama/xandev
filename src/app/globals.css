@@ -42,3 +42,21 @@ body {
     padding: 1.5rem;
   }
 }
+
+/* Geist Pixel is loaded in layout.tsx; used for the name heading. */
+.font-pixel {
+  font-family: var(--font-geist-pixel), "Geist Mono", monospace;
+}
+
+/* Geist is loaded in layout.tsx; used for the intro line under the name. */
+.font-geist {
+  font-family: var(--font-geist), Inter, system-ui, sans-serif;
+}
+
+/* Decorative dot field behind the top-right of the page, fading out toward the content. */
+.dots {
+  background-image: radial-gradient(var(--foreground) 1px, transparent 1.5px);
+  background-size: 14px 14px;
+  opacity: 0.22;
+  mask-image: radial-gradient(ellipse at top right, black 0%, transparent 70%);
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Montserrat, Roboto_Mono } from "next/font/google";
+import { Geist, Geist_Pixel, Montserrat, Roboto_Mono } from "next/font/google";
 import "./globals.css";
+import CookieConsent from "./components/CookieConsent";
 
 const montserrat = Montserrat({
   variable: "--font-sans",
@@ -11,6 +12,17 @@ const montserrat = Montserrat({
 const robotoMono = Roboto_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+});
+
+const geist = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
+});
+
+const geistPixel = Geist_Pixel({
+  variable: "--font-geist-pixel",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -88,10 +100,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.variable} ${robotoMono.variable} antialiased`}
+        className={`${montserrat.variable} ${robotoMono.variable} ${geistPixel.variable} ${geist.variable} antialiased`}
       >
-        <main className="mx-auto w-full max-w-2xl px-6 pb-16">
+        <div
+          aria-hidden
+          className="dots pointer-events-none fixed top-0 right-0 h-[70vh] w-[60vw]"
+        />
+        <main className="relative mx-auto w-full max-w-2xl px-6 pb-16">
           {children}
+          <CookieConsent />
         </main>
       </body>
     </html>

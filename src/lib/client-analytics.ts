@@ -6,6 +6,46 @@ function canUseBrowserApis() {
   return typeof window !== "undefined";
 }
 
+// Visitor's analytics choice. Nothing is recorded unless this is "granted".
+const CONSENT_KEY = "analytics_consent";
+const CONSENT_EVENT = "analytics-consent-change";
+
+export type Consent = "granted" | "denied" | null;
+
+export function getConsent(): Consent {
+  try {
+    const value = window.localStorage.getItem(CONSENT_KEY);
+    return value === "granted" || value === "denied" ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+export function setConsent(value: Consent) {
+  try {
+    if (value) {
+      window.localStorage.setItem(CONSENT_KEY, value);
+    } else {
+      window.localStorage.removeItem(CONSENT_KEY);
+    }
+    if (value !== "granted") {
+      window.sessionStorage.removeItem(SESSION_KEY);
+    }
+  } catch {
+    // Storage blocked: the choice just won't persist.
+  }
+  window.dispatchEvent(new Event(CONSENT_EVENT));
+}
+
+export function subscribeConsent(onChange: () => void) {
+  window.addEventListener(CONSENT_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(CONSENT_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
 function getOrCreateSessionId() {
   if (!canUseBrowserApis()) {
     return "";
@@ -25,14 +65,15 @@ async function postJson(url: string, body: Record<string, unknown>) {
   await fetch(url, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify(body),
+    // The server refuses to store anything without this flag.
+    body: JSON.stringify({ ...body, consent: "granted" }),
     keepalive: true,
     cache: "no-store",
   });
 }
 
 export async function trackClickEvent(eventName: string) {
-  if (!canUseBrowserApis()) {
+  if (!canUseBrowserApis() || getConsent() !== "granted") {
     return;
   }
 
@@ -53,7 +94,7 @@ export async function trackClickEvent(eventName: string) {
 }
 
 export function initializeSessionTracking() {
-  if (!canUseBrowserApis()) {
+  if (!canUseBrowserApis() || getConsent() !== "granted") {
     return () => {};
   }
 
@@ -71,7 +112,8 @@ export function initializeSessionTracking() {
 
   let sentEnd = false;
   const sendEnd = () => {
-    if (sentEnd) {
+    // Consent can be withdrawn mid-session; send nothing after that.
+    if (sentEnd || getConsent() !== "granted") {
       return;
     }
     sentEnd = true;
@@ -79,6 +121,7 @@ export function initializeSessionTracking() {
     const durationSeconds = Math.floor((Date.now() - startedAt) / 1000);
     const payload = JSON.stringify({
       action: "end",
+      consent: "granted",
       sessionId,
       durationSeconds,
       path: window.location.pathname,

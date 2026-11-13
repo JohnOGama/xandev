@@ -19,6 +19,10 @@ export const SKILL_GROUPS = [
     label: "Web3",
     skills: ["ethers-js", "Privy Auth"],
   },
+  {
+    label: "AI",
+    skills: ["Claude", "Cursor", "Antigravity"],
+  },
 ];
 
 export type Project = {

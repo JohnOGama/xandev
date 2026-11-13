@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { PROJECTS, initials, projectUsesSkill } from "@/app/config/constants";
 import { trackClickEvent } from "@/lib/client-analytics";
 import { useState } from "react";
@@ -55,14 +56,14 @@ const WorkExperience = ({ selectedSkills }: { selectedSkills: string[] }) => {
                 </h3>
                 <span className="text-xs text-muted">{project.country}</span>
                 {project.url ? (
-                  <a
+                  <Link
                     href={project.url}
                     target="_blank"
                     rel="noreferrer"
                     className="ml-2 font-mono text-xs text-muted underline underline-offset-4 hover:text-foreground"
                   >
                     {new URL(project.url).hostname} ↗
-                  </a>
+                  </Link>
                 ) : null}
               </div>
             </div>
