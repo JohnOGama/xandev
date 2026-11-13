@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Pixel, Montserrat, Roboto_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import CookieConsent from "./components/CookieConsent";
 import {
@@ -113,6 +114,14 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${robotoMono.variable} ${geistPixel.variable} ${geist.variable} antialiased`}
       >
+        {process.env.NEXT_PUBLIC_UMAMI_SRC &&
+        process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID ? (
+          <Script
+            src={process.env.NEXT_PUBLIC_UMAMI_SRC}
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            strategy="afterInteractive"
+          />
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { PROJECTS, initials, projectUsesSkill } from "@/app/config/constants";
+import { PROJECTS, initials } from "@/app/config/constants";
 import { trackClickEvent } from "@/lib/client-analytics";
 import { useState } from "react";
 
@@ -8,15 +8,8 @@ const tabs = ["Projects", "Contributions"];
 
 type TabKey = (typeof tabs)[number];
 
-const WorkExperience = ({ selectedSkills }: { selectedSkills: string[] }) => {
+const WorkExperience = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("Projects");
-
-  const filteredProjects =
-    selectedSkills.length === 0
-      ? PROJECTS
-      : PROJECTS.filter((project) =>
-          selectedSkills.some((skill) => projectUsesSkill(project, skill))
-        );
 
   return (
     <div>
@@ -41,7 +34,7 @@ const WorkExperience = ({ selectedSkills }: { selectedSkills: string[] }) => {
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
-        {filteredProjects.map((project) => (
+        {PROJECTS.map((project) => (
           <article key={project.title} className="card flex flex-col">
             <div className="flex items-center gap-3">
               <div

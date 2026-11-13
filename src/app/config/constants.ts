@@ -237,7 +237,7 @@ export const projectUsesSkill = (project: Project, skill: string) =>
       skill.toLowerCase().includes(tech.toLowerCase())
   );
 
-// Home page chips: only skills that at least one project uses, so every chip filters to something.
+// Home page chips: only skills that at least one project uses.
 export const FILTER_SKILLS = SKILL_GROUPS.flatMap((group) => group.skills).filter(
   (skill) => PROJECTS.some((project) => projectUsesSkill(project, skill))
 );
