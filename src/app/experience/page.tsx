@@ -21,7 +21,7 @@ export default function ExperiencePage() {
         Experience
       </h1>
       <p className="mt-6 mb-14 max-w-xl text-[15px] leading-relaxed text-foreground/70">
-        Experienced developer with 4+ years of experience, building tools, that
+        Experienced developer with 3+ years of experience, building tools, that
         will help to improve business workflow, utilized ai to build fast,
         secured, and reliable.
       </p>
