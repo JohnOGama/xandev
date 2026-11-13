@@ -24,16 +24,16 @@ export default async function AdminDashboardPage() {
 
   return (
     <main className="mx-auto mt-8 max-w-3xl space-y-5">
-      <header className="rounded-xl bg-primary-card/80 p-4">
+      <header className="rounded-xl border border-line p-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h1 className="text-xl font-semibold text-white">Analytics dashboard</h1>
-            <p className="text-sm text-white/60">Portfolio views, clicks, and engagement</p>
+            <h1 className="text-xl font-semibold text-foreground">Analytics dashboard</h1>
+            <p className="text-sm text-foreground/60">Portfolio views, clicks, and engagement</p>
           </div>
           <form action="/api/admin/logout" method="post">
             <button
               type="submit"
-              className="rounded-md bg-white/10 px-3 py-1.5 text-xs text-white/80"
+              className="rounded-md bg-foreground/10 px-3 py-1.5 text-xs text-foreground/80"
             >
               Logout
             </button>
@@ -51,39 +51,39 @@ export default async function AdminDashboardPage() {
         />
       </section>
 
-      <section className="rounded-xl bg-primary-card/80 p-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-secondary/90">
+      <section className="rounded-xl border border-line p-4">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">
           Top click events
         </h2>
         <div className="mt-3 space-y-2">
           {stats.topEvents.length === 0 ? (
-            <p className="text-sm text-white/50">No click data yet.</p>
+            <p className="text-sm text-foreground/50">No click data yet.</p>
           ) : (
             stats.topEvents.map((item) => (
               <div
                 key={item.eventName}
-                className="flex items-center justify-between rounded-md bg-black/20 px-3 py-2 text-sm"
+                className="flex items-center justify-between rounded-md bg-surface px-3 py-2 text-sm"
               >
-                <span className="text-white/80">{item.eventName}</span>
-                <span className="text-secondary">{item.count}</span>
+                <span className="text-foreground/80">{item.eventName}</span>
+                <span className="text-foreground">{item.count}</span>
               </div>
             ))
           )}
         </div>
       </section>
 
-      <section className="rounded-xl bg-primary-card/80 p-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-secondary/90">
+      <section className="rounded-xl border border-line p-4">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">
           Recent unique views
         </h2>
         <div className="mt-3 space-y-2">
           {stats.recentViews.length === 0 ? (
-            <p className="text-sm text-white/50">No view data yet.</p>
+            <p className="text-sm text-foreground/50">No view data yet.</p>
           ) : (
             stats.recentViews.map((view, index) => (
               <div
                 key={`${view.firstSeenAt}-${index}`}
-                className="rounded-md bg-black/20 px-3 py-2 text-sm text-white/75"
+                className="rounded-md bg-surface px-3 py-2 text-sm text-foreground/75"
               >
                 {new Date(view.firstSeenAt).toLocaleString()} - {view.city || "Unknown"},{" "}
                 {view.country || "Unknown"} - {view.path}
@@ -98,9 +98,9 @@ export default async function AdminDashboardPage() {
 
 function StatCard({ label, value }: { label: string; value: string | number }) {
   return (
-    <article className="rounded-xl bg-primary-card/80 p-3">
-      <p className="text-xs uppercase tracking-wider text-white/50">{label}</p>
-      <p className="mt-1 text-xl font-semibold text-white">{value}</p>
+    <article className="rounded-xl border border-line p-3">
+      <p className="text-xs uppercase tracking-wider text-foreground/50">{label}</p>
+      <p className="mt-1 text-xl font-semibold text-foreground">{value}</p>
     </article>
   );
 }

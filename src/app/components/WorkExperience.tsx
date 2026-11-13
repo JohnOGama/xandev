@@ -1,111 +1,93 @@
 "use client";
-import { PROJECTS } from "@/app/config/constants";
+import { PROJECTS, initials, projectUsesSkill } from "@/app/config/constants";
 import { trackClickEvent } from "@/lib/client-analytics";
-import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
 const tabs = ["Projects", "Contributions"];
 
 type TabKey = (typeof tabs)[number];
 
-interface WorkExperienceProps {
-  selectedSkills?: string[];
-}
-
-const WorkExperience = ({ selectedSkills = [] }: WorkExperienceProps) => {
+const WorkExperience = ({ selectedSkills }: { selectedSkills: string[] }) => {
   const [activeTab, setActiveTab] = useState<TabKey>("Projects");
 
-  const filteredProjects = useMemo(() => {
-    if (selectedSkills.length === 0) {
-      return PROJECTS;
-    }
-
-    return PROJECTS.filter((project) =>
-      selectedSkills.some((skill) =>
-        project.builtWith.some(
-          (tech) =>
-            tech.toLowerCase().includes(skill.toLowerCase()) ||
-            skill.toLowerCase().includes(tech.toLowerCase())
-        )
-      )
-    );
-  }, [selectedSkills]);
-
-  const handleTabClick = (value: TabKey) => {
-    setActiveTab(value);
-  };
+  const filteredProjects =
+    selectedSkills.length === 0
+      ? PROJECTS
+      : PROJECTS.filter((project) =>
+          selectedSkills.some((skill) => projectUsesSkill(project, skill))
+        );
 
   return (
-    <div className="space-y-3">
-      <div className="flex gap-2 items-center">
-        {tabs.map((value, index) => (
-          <button
-            key={index}
-            onClick={() => handleTabClick(value)}
-            className={`
-              ${
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-mono text-sm text-muted">projects</h2>
+        <div className="flex rounded-md border border-line p-0.5 font-mono">
+          {tabs.map((value) => (
+            <button
+              key={value}
+              aria-pressed={activeTab === value}
+              onClick={() => setActiveTab(value)}
+              className={`cursor-pointer rounded px-2.5 py-1 text-xs transition-colors ${
                 activeTab === value
-                  ? "bg-secondary/15 text-secondary"
-                  : "text-gray hover:text-white"
-              }
-              cursor-pointer rounded-md px-2.5 py-1 text-sm font-medium transition-colors`}
-          >
-            {value}
-          </button>
-        ))}
+                  ? "bg-foreground text-background"
+                  : "text-muted hover:text-foreground"
+              }`}
+            >
+              {value}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="flex flex-col gap-2.5">
-        {filteredProjects.map((project, index) => (
-          <div
-            key={index}
-            className="relative overflow-hidden rounded-lg bg-primary-card/90 p-3 md:p-4"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex flex-col">
-                <h1 className="text-primary text-base font-semibold md:text-lg">
-                  {project.title}
-                </h1>
-                <span className="text-xs text-gray">{project.country}</span>
+      <div className="mt-6 flex flex-col gap-3">
+        {filteredProjects.map((project) => (
+          <article key={project.title} className="card flex flex-col">
+            <div className="flex items-center gap-3">
+              <div
+                aria-hidden
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-line font-mono text-sm font-semibold"
+              >
+                {initials(project.title)}
               </div>
-
-              <div className="shrink-0 rounded-md bg-white/5 p-1">
-                <Image
-                  className="rounded-md object-contain opacity-80"
-                  src={project.companyLogo}
-                  alt={project.company}
-                  width={project.company === "Mobii PH" ? 28 : 60}
-                  height={project.company === "Mobii PH" ? 28 : 60}
-                />
+              <div>
+                <h3 className="text-base font-bold tracking-tight md:text-lg">
+                  {project.title}
+                </h3>
+                <span className="text-xs text-muted">{project.country}</span>
+                {project.url ? (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ml-2 font-mono text-xs text-muted underline underline-offset-4 hover:text-foreground"
+                  >
+                    {new URL(project.url).hostname} ↗
+                  </a>
+                ) : null}
               </div>
             </div>
 
-            <div className="mt-2 md:max-w-[90%]">
+            <div className="mt-4 flex-1">
               {activeTab === "Projects" ? (
-                <span className="text-sm text-white/70">
+                <p className="text-[13px] leading-relaxed text-foreground/70">
                   {project.description}
-                </span>
+                </p>
               ) : (
                 <Contributions contributions={project.contributions} />
               )}
             </div>
 
-            <div className="mt-3 flex gap-1 items-start">
-              <div className="flex flex-wrap items-center gap-1.5 text-xs text-gray">
-                <span className="mr-1 text-[10px] font-semibold tracking-wider text-white/50">
-                  BUILT WITH
-                </span>
-                {project.builtWith.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full bg-white/8 px-2 py-0.5 text-[11px] text-white/85"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+            <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Built with">
+              {project.builtWith.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-full border border-line px-2 py-0.5 font-mono text-[10px] text-muted"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
         ))}
       </div>
     </div>
@@ -119,14 +101,14 @@ function Contributions({ contributions }: { contributions: string[] }) {
   const visibleContributions = expanded ? contributions : contributions.slice(0, 4);
 
   return (
-    <div className="space-y-1.5">
-      <p className="text-xs font-semibold uppercase tracking-wider text-secondary/90">
-        Key contributions
-      </p>
+    <div className="space-y-2">
       <ul className="space-y-1">
         {visibleContributions.map((contribution, index) => (
-          <li key={index} className="flex items-start gap-2 text-sm text-white/80">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
+          <li
+            key={index}
+            className="flex items-start gap-2 text-sm text-foreground/75"
+          >
+            <span className="mt-2 h-px w-2 shrink-0 bg-muted" />
             <span>{contribution}</span>
           </li>
         ))}
@@ -138,7 +120,7 @@ function Contributions({ contributions }: { contributions: string[] }) {
             void trackClickEvent("click.contributions.toggle");
             setExpanded((prev) => !prev);
           }}
-          className="cursor-pointer text-xs font-medium text-secondary/90 hover:text-secondary"
+          className="cursor-pointer text-xs font-medium text-muted underline underline-offset-4 hover:text-foreground"
         >
           {expanded ? "See less" : `See more (+${contributions.length - 4})`}
         </button>

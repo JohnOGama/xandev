@@ -1,15 +1,24 @@
-export const SKILLS = [
-  "React Js",
-  "Next Js",
-  "Tailwind CSS",
-  "GraphQL",
-  "Nest Js",
-  "React query",
-  "Zustand",
-  "PostgreSQL",
-  "ethers-js",
-  "Postman",
-  "TypeScript",
+export const SKILL_GROUPS = [
+  {
+    label: "Languages",
+    skills: ["TypeScript", "JavaScript"],
+  },
+  {
+    label: "Frontend",
+    skills: ["React Js", "React Native Expo", "Next Js", "Tailwind CSS", "Zustand", "React query", "ShadCN UI", "Redux"],
+  },
+  {
+    label: "Backend & Database",
+    skills: ["Nest Js", "Node Js", "GraphQL", "PostgreSQL", "TypeORM", "Drizzle ORM"],
+  },
+  {
+    label: "Tools & Infrastructure",
+    skills: ["Git", "Docker", "Jenkins", "AWS S3", "Vercel", "Railway", "Postman", "Jest"],
+  },
+  {
+    label: "Web3",
+    skills: ["ethers-js", "Privy Auth"],
+  },
 ];
 
 export type Project = {
@@ -20,6 +29,7 @@ export type Project = {
   companyLogo: string;
   contributions: string[];
   builtWith: string[];
+  url?: string;
 };
 
 export type WorkTimelineItem = {
@@ -34,13 +44,27 @@ export type WorkTimelineItem = {
 export const WORK_TIMELINE: WorkTimelineItem[] = [
   {
     role: "Frontend Developer",
+    company: "Geiger",
+    employmentType: "Full-time",
+    location: "United States (Remote)",
+    period: "Mar 2026 - Nov 2026",
+    highlights: [
+      "Migrated the site from C8 to C11, using Payload CMS to build the e-commerce platform.",
+      "Worked on the ERP system to replicate how the C8 version was set up in C11.",
+      "Coordinated closely with the Account Manager to clarify store requirements and ensure data was aligned before migrating to C11.",
+    ],
+  },
+  {
+    role: "Frontend Developer | AI-Driven Development",
     company: "WYNTAP Inc",
     employmentType: "Contract",
     location: "Philippines (Remote)",
     period: "Nov 2025 - Feb 2026",
     highlights: [
-      "Developed and maintained frontend features using Angular.",
-      "Collaborated with the team to deliver responsive and performant UI components.",
+      "Utilized AI-assisted development tools such as Cursor AI to improve development efficiency and accelerate feature delivery.",
+      "Handled the full frontend of a backoffice bulk upload tool — built the UI, wired up the Excel file processing flow, and integrated the backend APIs to automate user data onboarding.",
+      "Developed the frontend for a Google Drive-like file management feature, converting Figma designs into a fully working Angular interface with complete API integration.",
+      "Maintained the UpEnglish IELTS platform by fixing bugs, resolving UI issues, and making code improvements to keep the platform stable and reliable for active users.",
     ],
   },
   {
@@ -48,10 +72,11 @@ export const WORK_TIMELINE: WorkTimelineItem[] = [
     company: "AffirmData",
     employmentType: "Contract",
     location: "United States (Remote)",
-    period: "Sep 2025 - Nov 2025",
+    period: "Sept 2025 - Nov 2025",
     highlights: [
-      "Migrated a production platform from Bubble to Next.js, NestJS, GraphQL, and PostgreSQL.",
-      "Rebuilt and optimized frontend UX for better performance and reliability.",
+      "The client's app built on Bubble (no-code) was suffering from infinite loading, slow renders, and no pagination — making it unusable for heavy data workflows.",
+      "Owned the frontend side of the migration from Bubble to Next.js — rebuilt all views from scratch with proper pagination, skeleton loading, and an improved UI/UX and working alongside the backend team on NestJS, PostgreSQL, and GraphQL.",
+      "Resolved all critical performance issues within 2 months — the app went from broken and slow to fully functional, with faster load times, stable rendering, and an improved overall UI/UX.",
     ],
   },
   {
@@ -59,21 +84,23 @@ export const WORK_TIMELINE: WorkTimelineItem[] = [
     company: "Mobii PH",
     employmentType: "Full-time",
     location: "Philippines (Remote)",
-    period: "Jul 2024 - Sep 2025",
+    period: "July 2024 - Sept 2025",
     highlights: [
-      "Shipped end-to-end features across frontend and backend with Web3 integrations.",
-      "Built a mini dApp on KAIA and improved scalability for a large user base.",
+      "Developed a mini dApp on the KAIA blockchain that served more than 200,000 registered users within the LINE ecosystem.",
+      "Integrated smart contracts and multi-chain features using Ethers.js and Privy Auth, enabling secure wallet authentication and contract interactions.",
+      "Collaborated with designer to convert Figma designs into production-ready React components and implemented waitlist features to support user onboarding.",
     ],
   },
   {
     role: "Frontend Developer",
     company: "1TechHub",
-    employmentType: "Part-time",
+    employmentType: "Freelance",
     location: "Australia (Remote)",
     period: "Nov 2023 - Aug 2025",
     highlights: [
-      "Built a scalable analytics admin dashboard from scratch using Next.js.",
-      "Converted Figma designs into responsive, production-ready UI and integrated APIs.",
+      "Built a modular admin dashboard using Next.js with reusable components to support long-term scalability and maintenance.",
+      "Converted Figma designs into responsive and consistent user interfaces across multiple screen sizes.",
+      "Improved application responsiveness using Zustand and optimistic UI updates while reducing unnecessary API requests.",
     ],
   },
 ];
@@ -191,3 +218,21 @@ export const PROJECTS: Project[] = [
 
 export const GITHUB_LINK = "https://github.com/JohnOGama";
 export const LINKEDIN_LINK = "https://www.linkedin.com/in/johnogama/";
+
+// "TaskMe" -> "TM": first two capitals, else the first two letters.
+export const initials = (title: string) => {
+  const caps = title.replace(/[^A-Z]/g, "");
+  return (caps.length >= 2 ? caps : title).slice(0, 2).toUpperCase();
+};
+
+export const projectUsesSkill = (project: Project, skill: string) =>
+  project.builtWith.some(
+    (tech) =>
+      tech.toLowerCase().includes(skill.toLowerCase()) ||
+      skill.toLowerCase().includes(tech.toLowerCase())
+  );
+
+// Home page chips: only skills that at least one project uses, so every chip filters to something.
+export const FILTER_SKILLS = SKILL_GROUPS.flatMap((group) => group.skills).filter(
+  (skill) => PROJECTS.some((project) => projectUsesSkill(project, skill))
+);

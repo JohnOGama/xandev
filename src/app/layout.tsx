@@ -90,7 +90,7 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${robotoMono.variable} antialiased`}
       >
-        <main className="w-full text-white h-full p-5 md:p-0 md:py-5 lg:my-10 max-w-2xl mx-auto">
+        <main className="mx-auto w-full max-w-2xl px-6 pb-16">
           {children}
         </main>
       </body>

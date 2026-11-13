@@ -1,91 +1,65 @@
 "use client";
 
-import { FileText, Mail, MapPin, Phone } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { GITHUB_LINK, LINKEDIN_LINK } from "../config/constants";
 import { trackClickEvent } from "@/lib/client-analytics";
 
+const EMAIL = "ogamajohnd@gmail.com";
+const MAIL_LINK = `mailto:${EMAIL}?subject=${encodeURIComponent(
+  "Hi John Ogama!"
+)}`;
+
 const ProfileInformation = () => {
-  const handleDownloadPdf = () => {
-    void trackClickEvent("click.resume");
-    const link = document.createElement("a");
-    link.href = "/pdf/JohnOgama.pdf";
-    link.download = "JohnOgama.pdf";
-    link.click();
-  };
-
-  const handleMail = () => {
-    void trackClickEvent("click.email");
-    const email = "ogamajohnd@gmail.com";
-    const subject = encodeURIComponent("Hi John Ogama!");
-
-    window.location.href = `mailto:${email}?subject=${subject}`;
-  };
-
   return (
-    <div className="lg:space-y-2">
-      <div>
-        <h1 className="text-xl font-semibold lg:text-2xl">
-          Hi, I&apos;m John Ogama
-        </h1>
-        <span>Fullstack Developer </span>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex gap-1 items-center">
-          <MapPin size={15} className="text-gray" />
-          <span className="text-sm text-gray">Bacoor City, Cavite</span>
-        </div>
-        <div className="flex gap-1 items-center">
-          <Phone size={15} className="text-gray" />
-          <span className="text-sm text-gray">+63 992 514 3490</span>
-        </div>
-      </div>
-      <div className="mt-2 flex items-center gap-2">
-        <div
-          onClick={handleDownloadPdf}
-          className="w-fit cursor-pointer flex gap-1 bg-secondary-card items-center h-6 md:h-9 px-1 md:px-2 rounded-md"
-        >
-          <FileText size={15} />
-          <h1 className="text-sm md:text-base">Resume</h1>
-        </div>
+    <header className="pt-20 pb-14 sm:pt-28">
+      <h1 className="text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-none">
+        John Ogama
+      </h1>
+      <p className="mt-6 text-[15px] leading-relaxed text-foreground/70">
+        Fullstack Developer with{" "}
+        <span className="font-semibold text-foreground">
+          4+ years of experience
+        </span>{" "}
+        building web and mobile apps.
+      </p>
+      <p className="mt-1 font-mono text-xs text-muted">+63 992 514 3490</p>
 
-        <Link
+      <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-muted">
+        <a
+          href="/pdf/JohnOgama.pdf"
           target="_blank"
+          rel="noreferrer"
+          onClick={() => void trackClickEvent("click.resume")}
+          className="rounded-md bg-foreground px-2.5 py-1 text-background transition-opacity hover:opacity-85"
+        >
+          resume ↗
+        </a>
+        <a
+          target="_blank"
+          rel="noreferrer"
           href={GITHUB_LINK}
           onClick={() => void trackClickEvent("click.github")}
+          className="hover:text-foreground"
         >
-          <div className="w-fit cursor-pointer flex gap-1 bg-secondary-card items-center h-6 md:h-9 px-1.5 md:px-3 rounded-md">
-            <Image
-              src="/Icons/github-mark-white.svg"
-              alt="Github"
-              width={15}
-              height={15}
-            />
-          </div>
-        </Link>
-        <Link
+          github ↗
+        </a>
+        <a
           target="_blank"
+          rel="noreferrer"
           href={LINKEDIN_LINK}
           onClick={() => void trackClickEvent("click.linkedin")}
+          className="hover:text-foreground"
         >
-          <div className="w-fit cursor-pointer flex gap-1 bg-secondary-card items-center h-6 md:h-9 px-1.5 md:px-3 rounded-md">
-            <Image
-              src="/Icons/linkedin-white.svg"
-              alt="Linkedin"
-              width={15}
-              height={15}
-            />
-          </div>
-        </Link>
-        <div
-          onClick={handleMail}
-          className="w-fit cursor-pointer flex gap-1 bg-secondary-card items-center h-6 md:h-9 px-1.5 md:px-3 rounded-md"
+          linkedin ↗
+        </a>
+        <a
+          href={MAIL_LINK}
+          onClick={() => void trackClickEvent("click.email")}
+          className="hover:text-foreground"
         >
-          <Mail size={15} />
-        </div>
+          {EMAIL}
+        </a>
       </div>
-    </div>
+    </header>
   );
 };
 

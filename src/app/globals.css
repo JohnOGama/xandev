@@ -1,38 +1,44 @@
 @import "tailwindcss";
 
 :root {
-  --background: #1c1b22;
-  --foreground: #171717;
-  --text-primary: #ffffff;
-  --text-secondary: #60a5fa;
-  --text-highlight: #52a6de;
-  --text-gray: #808080;
-  --primary-card: #1b1818;
-  --secondary-card: #271f1f;
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --muted: #6b6b6b;
+  --line: #e5e7eb;
+  --surface: #fafafa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--text-primary);
-  --color-secondary: var(--text-secondary);
-  --color-highlight: var(--text-highlight);
-  --color-gray: var(--text-gray);
-  --color-primary-card: var(--primary-card);
-  --color-secondary-card: var(--secondary-card);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--background);
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
 }

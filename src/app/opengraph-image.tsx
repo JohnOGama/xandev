@@ -14,7 +14,7 @@ export default async function Image() {
       <div
         style={{
           background:
-            "radial-gradient(circle at top right, #1f3b73 0%, #12131a 45%, #0a0a0a 100%)",
+            "#0a0a0a",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -34,7 +34,7 @@ export default async function Image() {
           <span
             style={{
               fontSize: "24px",
-              color: "#cfe1ff",
+              color: "#ededed",
               letterSpacing: "0.3px",
             }}
           >
@@ -43,7 +43,7 @@ export default async function Image() {
           <p
             style={{
               fontSize: "20px",
-              color: "#8eb6ff",
+              color: "#8f8f8f",
               margin: 0,
               fontWeight: "500",
             }}
@@ -74,7 +74,7 @@ export default async function Image() {
           <p
             style={{
               fontSize: "30px",
-              color: "#dbe8ff",
+              color: "#c4c4c4",
               margin: 0,
               lineHeight: "1.25",
             }}
@@ -94,8 +94,8 @@ export default async function Image() {
                 key={tag}
                 style={{
                   fontSize: "18px",
-                  color: "#b8d2ff",
-                  background: "rgba(87, 135, 233, 0.16)",
+                  color: "#ededed",
+                  background: "rgba(255, 255, 255, 0.08)",
                   padding: "8px 16px",
                   borderRadius: "999px",
                 }}
@@ -109,7 +109,7 @@ export default async function Image() {
         <p
           style={{
             margin: 0,
-            color: "#99a6be",
+            color: "#8f8f8f",
             fontSize: "18px",
           }}
         >

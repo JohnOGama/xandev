@@ -1,49 +1,58 @@
 "use client";
-import { SKILLS } from "../config/constants";
-import { useState } from "react";
+import Link from "next/link";
+import { FILTER_SKILLS } from "../config/constants";
 
 interface SkillsProps {
-  onSkillsChange?: (selectedSkills: string[]) => void;
+  selectedSkills: string[];
+  onSkillsChange: (selectedSkills: string[]) => void;
 }
 
-const Skills = ({ onSkillsChange }: SkillsProps) => {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-
-  const handleSkillClick = (skill: string) => {
-    const newSelectedSkills = selectedSkills.includes(skill)
-      ? selectedSkills.filter((s) => s !== skill)
-      : [...selectedSkills, skill];
-
-    setSelectedSkills(newSelectedSkills);
-    onSkillsChange?.(newSelectedSkills);
-  };
+const Skills = ({ selectedSkills, onSkillsChange }: SkillsProps) => {
+  const toggle = (skill: string) =>
+    onSkillsChange(
+      selectedSkills.includes(skill)
+        ? selectedSkills.filter((s) => s !== skill)
+        : [...selectedSkills, skill]
+    );
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <h1 className="text-base font-semibold text-secondary md:text-lg">Skills</h1>
-        <span className="text-xs text-white/50">Filter projects by stack</span>
+    <div>
+      <div className="mb-4 flex items-baseline justify-between">
+        <h3 className="font-mono text-[11px] uppercase tracking-wider text-muted">
+          Stack · filters projects
+        </h3>
+        <Link
+          href="/stack"
+          className="font-mono text-[11px] uppercase tracking-wider text-muted hover:text-foreground"
+        >
+          view all →
+        </Link>
       </div>
 
-      <div className="flex flex-wrap items-center gap-1.5">
-        {SKILLS.map((skill, id) => (
-          <button
-            key={id}
-            onClick={() => handleSkillClick(skill)}
-            className={`flex cursor-pointer items-center gap-2 rounded-full border px-2.5 py-1 text-nowrap text-xs md:text-sm transition-colors ${
-              selectedSkills.includes(skill)
-                ? "border-secondary/50 bg-secondary/20 text-white"
-                : "border-white/10 bg-secondary-card text-white/80 hover:bg-secondary-card/80 hover:text-white"
-            }`}
-          >
-            <div className="h-2 w-2 rounded-full border border-white/80">
-              {selectedSkills.includes(skill) && (
-                <div className="h-full w-full rounded-full bg-secondary"></div>
-              )}
-            </div>
-            {skill}
-          </button>
-        ))}
+      <div className="flex flex-wrap gap-2">
+        {FILTER_SKILLS.map((skill) => {
+          const selected = selectedSkills.includes(skill);
+          return (
+            <button
+              key={skill}
+              aria-pressed={selected}
+              onClick={() => toggle(skill)}
+              className={`cursor-pointer rounded-md border px-2.5 py-1 font-mono text-xs transition-colors ${
+                selected
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-line text-foreground/70 hover:border-foreground/40 hover:text-foreground"
+              }`}
+            >
+              {skill}
+            </button>
+          );
+        })}
+        <Link
+          href="/stack"
+          className="rounded-md border border-dashed border-line px-2.5 py-1 font-mono text-xs text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
+        >
+          + more
+        </Link>
       </div>
     </div>
   );
